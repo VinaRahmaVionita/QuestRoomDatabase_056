@@ -21,5 +21,12 @@ fun TopAppBar(
     judul: String,
     modifier: Modifier = Modifier
 ) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        contentAlignment = Alignment.Center // Pastikan konten di tengah
+    ) {
 
+    }
 }
