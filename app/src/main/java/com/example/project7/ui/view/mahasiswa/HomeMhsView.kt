@@ -46,6 +46,26 @@ import com.example.project7.ui.viewmodel.UpdateMhsViewModel
 import kotlinx.coroutines.launch
 
 
+@Composable
+fun ListMahasiswa(
+    listMhs: List<Mahasiswa>,
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit = { }
+) {
+    LazyColumn (
+        modifier = modifier
+    ) {
+        items(
+            items = listMhs,
+            itemContent = { mhs ->
+                CardMhs(
+                    mhs = mhs,
+                    onClick = { onClick(mhs.nim) }
+                )
+            }
+        )
+    }
+}
 
 
 @OptIn(ExperimentalMaterial3Api::class)
