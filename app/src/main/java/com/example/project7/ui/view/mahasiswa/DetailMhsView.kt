@@ -44,6 +44,52 @@ import com.example.project7.ui.viewmodel.PenyediaViewModel
 import com.example.project7.ui.viewmodel.toMahasiswaEntity
 
 @Composable
+fun DetailMhsView(
+    modifier: Modifier = Modifier,
+    viewModel: DetailMhsViewModel = viewModel(factory = PenyediaViewModel.Factory),
+    onBack: () -> Unit = { },
+    onEditClick: (String) -> Unit = { },
+    onDeleteClick: () -> Unit = { }
+){
+    Scaffold (
+        topBar = {
+            TopAppBar(
+                judul = "Detail Mahasiswa",
+                showBackButton = true,
+                onBack = onBack,
+                modifier = modifier
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    onEditClick(viewModel.detailUiState.value.detailUiEvent.nim)
+                },
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Mahasiswa",
+                )
+            }
+        }
+    ) { innerPadding ->
+        val detailUiState by viewModel.detailUiState.collectAsState()
+
+        BodyDetailMhs (
+            modifier = Modifier.padding(innerPadding),
+            detailUiState = detailUiState,
+            onDeleteClick = {
+                viewModel.deleteMhs()
+                onDeleteClick
+            }
+        )
+    }
+
+}
+
+@Composable
 fun BodyDetailMhs(
     modifier: Modifier = Modifier,
     detailUiState: DetailUiState = DetailUiState(),
