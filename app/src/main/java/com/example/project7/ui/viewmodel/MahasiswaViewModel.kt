@@ -13,6 +13,21 @@ import kotlinx.coroutines.launch
 
 
 
+//untuk menghandle atau memberikan nilai validasi apakah benar atau salah
+data class FormErrorState(
+    val nim: String? = null,
+    val nama: String? = null,
+    val jenisKelamin: String? = null,
+    val alamat: String? = null,
+    val kelas: String? = null,
+    val angkatan: String? = null,
+){
+    fun isValid(): Boolean{
+        return nim == null && nama == null && jenisKelamin == null &&
+                alamat == null && kelas == null && angkatan == null
+    }
+}
+
 //menyimpan input form ke dalam entity
 //event adalah aksi
 //state adalah hasil dari event
