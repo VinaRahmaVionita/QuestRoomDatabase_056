@@ -13,6 +13,12 @@ import kotlinx.coroutines.launch
 
 
 
+data class MhsUIState(
+    val mahasiswaEvent: MahasiswaEvent = MahasiswaEvent(),
+    val isEntryValid: FormErrorState = FormErrorState(),
+    val snackBarMessage: String? = null,
+)
+
 //untuk menghandle atau memberikan nilai validasi apakah benar atau salah
 data class FormErrorState(
     val nim: String? = null,
