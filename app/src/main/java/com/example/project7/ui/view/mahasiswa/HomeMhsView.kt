@@ -46,6 +46,48 @@ import com.example.project7.ui.viewmodel.UpdateMhsViewModel
 import kotlinx.coroutines.launch
 
 @Composable
+fun HomeMhsView(
+    viewModel: HomeMhsViewModel = viewModel(factory = PenyediaViewModel.Factory),
+    onAddMhs: () -> Unit = { },
+    onDetailClick: (String) -> Unit = { },
+    modifier: Modifier = Modifier
+) {
+    Scaffold (
+        topBar = {
+            TopAppBar(
+                onBack = { },
+                showBackButton = false,
+                judul = "Daftar Mahasiswa",
+                modifier = modifier
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onAddMhs,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Tambah Mahasiswa",
+                )
+            }
+        }
+    ) { innerPadding ->
+        val homeUiState by viewModel.homeUiState.collectAsState()
+
+        BodyHomeMhsView(
+            homeUiState = homeUiState,
+            onClick = {
+                onDetailClick(it)
+            },
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
+}
+
+
+@Composable
 fun BodyHomeMhsView(
     homeUiState: HomeUiState,
     onClick: (String) -> Unit = { },
