@@ -40,7 +40,64 @@ fun PengelolaHalaman(
                 modifier = modifier
             )
         }
+            composable(
+                route = DestinasiInsert.route
+            ){
+                InsertMhsView(
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigate = {
+                        navController.popBackStack()
+                    },
+                    modifier = modifier,
+                )
+            }
+
+            composable(
+                DestinasiDetail.routesWithArg,
+                arguments = listOf(
+                    navArgument(DestinasiDetail.NIM){
+                        type = NavType.StringType
+                    }
+                )
+            )  {
+                val nim = it.arguments?.getString(DestinasiDetail.NIM)
+                nim?.let { nim ->
+                    DetailMhsView(
+                        onBack = {
+                            navController.popBackStack()
+                        },
+                        onEditClick = {
+                            navController.navigate("${DestinasiUpdate.route}/$it")
+                        },
+                        modifier = modifier,
+                        onDeleteClick = {
+                            navController.popBackStack()
+                        }
+                    )
+                }
+            }
+
+            composable(
+                DestinasiUpdate.routesWithArg,
+                arguments = listOf(
+                    navArgument(DestinasiUpdate.NIM){
+                        type = NavType.StringType
+                    }
+                )
+            ) {
+                UpdateMhsView(
+                    onBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigate = {
+                        navController.popBackStack()
+                    },
+                    modifier = modifier
+                )
+            }
 
 
-    }
+        }
 }
