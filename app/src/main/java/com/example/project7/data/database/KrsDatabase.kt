@@ -8,26 +8,27 @@ import com.example.project7.data.dao.MahasiswaDao
 import com.example.project7.data.entity.Mahasiswa
 
 
+/// Mendefinisikan database dengan tabel Mahasiswa
 @Database(entities = [Mahasiswa::class], version = 1, exportSchema = false)
-abstract class KrsDatabase : RoomDatabase(){
+abstract class KrsDatabase : RoomDatabase() {
 
-    //mendefinisikan fungsi untuk mengakses mahasiswa
+    // Mendefinisikan fungsi untuk mengakses data Mahasiswa
     abstract fun mahasiswaDao(): MahasiswaDao
-    //untuk menambah entitas deklarasikan disini dan juga [Mahasiswa::class, ... ]
 
-    companion object{
-        @Volatile //memastikan bahwa nilai variable Instance selalu sama di semua thread
+    companion object {
+        @Volatile // Memastikan bahwa nilai variable instance selalu sama di semua thread
         private var Instance: KrsDatabase? = null
 
-        fun getDatabase(context: Context): KrsDatabase{
-            return (Instance ?: synchronized(this){
+        fun getDatabase(context: Context): KrsDatabase {
+            return (Instance ?: synchronized(this) {
                 Room.databaseBuilder(
                     context,
-                    KrsDatabase::class.java, //Class database
-                    "KrsDatabase" //nama database
+                    KrsDatabase::class.java, // Class database
+                    "KrsDatabase" //Nama database
                 )
                     .build().also { Instance = it }
             })
         }
+
     }
 }
