@@ -42,6 +42,58 @@ object DestinasiInsert : AlamatNavigasi {
 }
 
 @Composable
+fun InsertMhsView(
+    onBack: () -> Unit,
+    onNavigate:() -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: MahasiswaViewModel = viewModel(factory = PenyediaViewModel.Factory) //inisialilasi view model
+){
+    val uiState = viewModel.uiState //ambil UI state dari view model
+    val snackbarHostState = remember { SnackbarHostState() } //Snackbar state
+    val coroutineScope = rememberCoroutineScope()
+
+    //observasi perubahan snackbarMessage
+    LaunchedEffect(uiState.snackBarMessage) {
+        uiState.snackBarMessage?.let { message ->
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(message) //Tampilkan snackbar
+                viewModel.resetSnackBarMessage()
+            }
+        }
+    }
+
+    Scaffold (
+        modifier = modifier,
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) { padding ->
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp)
+        ) {
+            TopAppBar(
+                onBack = onBack,
+                showBackButton = true,
+                judul = "Tambah Mahasiswa"
+            )
+            //isi body
+            InsertBodyMhs(
+                uiState = uiState,
+                onValueChange = { updatedEvent ->
+                    viewModel.updateState(updatedEvent) //update state di view model
+                },
+                onClick = {
+                    viewModel.saveData()
+                    onNavigate()
+                }
+            )
+        }
+    }
+}
+
+
+@Composable
 fun InsertBodyMhs(
     modifier: Modifier = Modifier,
     onValueChange: (MahasiswaEvent) -> Unit,
