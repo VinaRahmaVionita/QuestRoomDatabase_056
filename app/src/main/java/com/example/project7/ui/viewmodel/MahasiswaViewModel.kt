@@ -12,6 +12,19 @@ import com.example.project7.data.entity.Mahasiswa
 import kotlinx.coroutines.launch
 
 
+
+//menyimpan input form ke dalam entity
+//event adalah aksi
+//state adalah hasil dari event
+fun MahasiswaEvent.toMahasiswaEntity(): Mahasiswa = Mahasiswa(
+    nim = nim,
+    nama = nama,
+    jenisKelamin = jenisKelamin,
+    alamat = alamat,
+    kelas = kelas,
+    angkatan = angkatan
+)
+
 //data class variable yang menyimpan data input form
 data class MahasiswaEvent(
     val nim: String = " ",
